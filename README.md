@@ -9,3 +9,6 @@
 
 3. Teste ssh key
 `ssh -T git@github.com`
+
+4. Private ssh
+`cat ~/.ssh/id_rsa`
