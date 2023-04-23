@@ -12,3 +12,20 @@
 
 4. Private ssh
 `cat ~/.ssh/id_rsa`
+
+5. Configurar o damemon do docker para expor o daemon remotamente
+`sudo mkdir -p /etc/systemd/system/docker.service.d`
+`sudo vi /etc/systemd/system/docker.service.d/override.conf`
+`past this`
+  [Service]
+        ExecStart=
+        ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
+
+`sudo launchctl  daemon-reload`
+`sudo launchctl  restart docker.service`
+
+
+6. `docker-compose -f jenkins-docker-compose.yml up`
+7. `docker-compose -f sonar-docker-compose.yml up`
+8. `docker-compose -f grana-prometheus-compose.yml up`
+8. `docker-compose -f app-docker-compose.yml up`
