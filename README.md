@@ -13,6 +13,9 @@
 4. Private ssh
 `cat ~/.ssh/id_rsa`
 
+5. Get kubeconfig
+`cat ~/.kube/config`
+
 5. Configurar o damemon do docker para expor o daemon remotamente
 `sudo mkdir -p /etc/systemd/system/docker.service.d`
 `sudo vi /etc/systemd/system/docker.service.d/override.conf`
