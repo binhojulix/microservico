@@ -32,3 +32,34 @@
 7. `docker-compose -f sonar-docker-compose.yml up`
 8. `docker-compose -f grana-prometheus-compose.yml up`
 8. `docker-compose -f app-docker-compose.yml up`
+
+
+az vm create \
+--resource-group rg-leading-griffon \
+--name jenkins-vm \
+--image UbuntuLTS \
+--admin-username "azureuser" \
+--generate-ssh-keys \
+--public-ip-sku Standard \
+--custom-data cloud-init-jenkins.txt
+
+
+az vm list -d -o table --query "[?name=='jenkins-vm']"
+
+az vm show \
+--resource-group rg-leading-griffon \
+--name jenkins-vm -d \
+--query [publicIps] \
+--output tsv
+
+
+terraform {
+
+
+
+Run terraform output to get the SSH private key and save it to a file.
+terraform output -raw tls_private_key > id_rsa
+Run terraform output to get the virtual machine public IP address.
+terraform output public_ip_address
+Use SSH to connect to the virtual machine.
+ssh -i id_rsa azureuser@<public_ip_address>

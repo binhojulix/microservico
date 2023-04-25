@@ -15,11 +15,11 @@ variable "aks_service_principal_client_secret" {
 }
 
 variable "cluster_name" {
-  default = "k8stest"
+  default = "k8stest3"
 }
 
 variable "acr_name" {
-  default = "acrappfaluz"
+  default = "acrappfaluz3"
 }
 
 variable "dns_prefix" {

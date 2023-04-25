@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+    tools {
+        maven "maven3"
+    }
+    environment {
+        registryName = "acrappfaluz"
+        registryCredentials = "acrappfaluz"
+        dockerImage = ''
+        registryUrl = "acrappfaluz.azurecr.io"
+    }
+    stages {
+        stage('chechout') {
+            steps {
+               checkout scmGit(branches: [[name: '*/main']],
+               extensions: [],
+               userRemoteConfigs: [[credentialsId: 'ssh-git', url: 'git@github.com:binhojulix/microservico.git']])
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh "mvn clean install"
+            }
+        }
+        stage('Build Image'){
+            steps {
+                script {
+                    dockerImage = docker.build("${registryUrl}/${registryName}")
+                }
+            }
+        }
+    }
+}
+
+this is a dockerfile
+FROM lolhens/baseimage-openjre
+ADD target/springbootApp.jar springbootApp.jar
+EXPOSE 80
+ENTRYPOINT ["java", "-jar", "springbootApp.jar"]
+
+this an kuberntes file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-springboot-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: springboot-app
+  template:
+    metadata:
+      labels:
+        app: springboot-app
+    spec:
+      containers:
+      - name: my-springboot-app
+        image: myacrrepo3210.azurecr.io/myacrrepo3210:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8085
+# service type loadbalancer       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: springboot-app
+    k8s-app: springboot-app
+  name: springboot-app
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8085
+  type: LoadBalancer
+  selector:
+    app: springboot-app
+
+
+acrappfaluz - acrappfaluz/****** (acrappfaluz)
+idkubeconfig - kubeconfig (idkubeconfig)
+
+create an jenkins file in java using this docoerfile an this kuberntes file to deploy on aks
