@@ -47,7 +47,7 @@ az vm create \
 az vm list -d -o table --query "[?name=='jenkins-vm']"
 
 az vm show \
---resource-group rg-leading-griffon \
+--resource-group rg-exact-reptile \
 --name jenkins-vm -d \
 --query [publicIps] \
 --output tsv
