@@ -1,11 +1,11 @@
 # microservico
 
 1. Generate ssh key 
-`ssh-keygen -t rsa -b 4096 -C "fabio.jdluz@gmail.com"`
+`ssh-keygen -t rsa -b 4096 -C "fxxxx@.com"`
 
 2. Configurar a chave do github
-`git config --global user.name "binhojulix"`
-`git config --global user.email fabio.jdluz@gmail.com`
+`git config --global user.name "bxxx"`
+`git config --global user.email xxxxz@xxx.com`
 
 3. Teste ssh key
 `ssh -T git@github.com`
