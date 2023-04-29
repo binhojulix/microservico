@@ -1,53 +1,5 @@
+create a kubernetes manifest to run this container 
+az acr repository list -n acrappfaluz3                                                                                                              [                                 
+  "acrappfaluz3"
+]
 
-how execute an shell on jenkins_vm
-resource "azurerm_linux_virtual_machine" "jenkins_vm" {
-  name                  = "jenkins-vm"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [azurerm_network_interface.example.id]
-   size               = "Standard_DS1_v2"
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
-    version   = "latest"
-  }
-
-  os_disk {
-    name              = "jenkins-osdisk"
-    caching           = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  computer_name                   = "jenkinvm"
-  admin_username                  = "azureuser"
-  disable_password_authentication = true
-
-  admin_ssh_key {
-    username   = "azureuser"
-    public_key = tls_private_key.example_ssh.public_key_openssh
-  }
-
-  boot_diagnostics {
-    storage_account_uri = azurerm_storage_account.my_storage_account.primary_blob_endpoint
-  }
-
-   tags = {
-     environment = "staging"
-   }
-}
-
-resource "tls_private_key" "example_ssh" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-jenkins.sh
-curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
-  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-  /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt-get update
-sudo apt-get install jenkins 

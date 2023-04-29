@@ -35,27 +35,26 @@ pipeline {
         }
         
       stage('Push Image') {
-    steps {
-        script {
-            withCredentials([usernamePassword(credentialsId: 'acrapp', usernameVariable: 'ACR_USERNAME', passwordVariable: 'ACR_PASSWORD')]) {
-                sh "docker login ${registryUrl} -u ${ACR_USERNAME} -p ${ACR_PASSWORD}"
-                sh "docker tag ${registryName}:${env.BUILD_ID} ${registryUrl}/${registryName}:${env.BUILD_ID}"
-                sh "docker push ${registryUrl}/${registryName}:${env.BUILD_ID}"
+        steps {
+            script {
+                withCredentials([usernamePassword(credentialsId: 'acrapp', usernameVariable: 'ACR_USERNAME', passwordVariable: 'ACR_PASSWORD')]) {
+                    sh "docker login ${registryUrl} -u ${ACR_USERNAME} -p ${ACR_PASSWORD}"
+                    sh "docker tag ${registryName}:${env.BUILD_ID} ${registryUrl}/${registryName}:${env.BUILD_ID}"
+                    sh "docker push ${registryUrl}/${registryName}:${env.BUILD_ID}"
+                }
             }
         }
-    }
 }
 
-stage('Deploy') {
-    steps {
-        script {
-            withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://your-aks-cluster-url']) {
-                sh "kubectl apply -f deployment.yaml"
+     stage ('K8S Deploy') {
+              steps {
+                script {
+                    withKubeConfig([credentialsId: 'aks', serverUrl: '']) {
+                    sh ('kubectl apply -f jenkins-aks-deploy-from-acr.yaml')
+                    }
+                }
             }
         }
-    }
-}
-
 
     }
 }
