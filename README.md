@@ -54,6 +54,17 @@
 
 
 
+
+
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 acrappfaluz3/azure-vote-front:v1
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 acrappfaluz3.azurecr.io/azure-vote-front:v1
+
+docker push acrappfaluz3.azurecr.io/azure-vote-front:v1
+
+
+
+az acr repository list --name acrappfaluz3 --output table
+
 6. `docker-compose -f jenkins-docker-compose.yml up`
 7. `docker-compose -f sonar-docker-compose.yml up`
 8. `docker-compose -f grana-prometheus-compose.yml up`
