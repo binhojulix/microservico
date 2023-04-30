@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-springboot-app
-        image: acrappfaluz3.azurecr.io/acrappfaluz3:18
+        image: acrappfaluz3.azurecr.io/acrappfaluz3nodejs:18
         imagePullPolicy: Always
         ports:
         - containerPort: 8085
