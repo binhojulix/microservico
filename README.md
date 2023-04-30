@@ -4,20 +4,22 @@
 `terraform output -raw tls_private_key > id_rsa`
 5. Run terraform output to get the virtual machine public IP address.
 `terraform output public_ip_address`
-6. Use SSH to connect to the virtual machine.
+6. Permission key
+`chmod 600 id_rsa`
+7. Use SSH to connect to the virtual machine.
 `ssh -i id_rsa azureuser@<public_ip_address>`
-7. Generate ssh key 
+8. Generate ssh key 
 `ssh-keygen -t rsa -b 4096 -C "fxxxx@.com"`
-8. Private ssh - Essa chave será usada na geração de ssh keys no github
+9. Private ssh - Essa chave será usada na geração de ssh keys no github
 `cat ~/.ssh/id_rsa.pub`
-9. Configure a chave do github
+10. Configure a chave do github
 `git config --global user.name "bxxx"`
 `git config --global user.email xxxxz@xxx.com`
-10. Teste ssh key
+11. Teste ssh key
 `ssh -T git@github.com`
-11. Config git credentials on jenkins - Run 
+12. Config git credentials on jenkins - Run 
 `cat ~/.ssh/id_rsa`
-12. Configurar o damemon do docker para expor o daemon remotamente
+13. Configurar o damemon do docker para expor o daemon remotamente
 `sudo mkdir -p /etc/systemd/system/docker.service.d`
 `sudo vi /etc/systemd/system/docker.service.d/override.conf`
 `past this`
@@ -28,16 +30,17 @@
 
 `sudo systemctl daemon-reload`
 `sudo systemctl restart docker.service`
+`sudo systemctl status docker`
 
 13. Get kubeconfig
 `rm -rf ~/.kube/config`
 
-14. Get kubeconfig
+14. Get credentiasl AKS
+`az aks get-credentials --resource-group rg-lenient-kit --name rg-lenient-kitk8stest3`
+
+15. Get kubeconfig
 `cat ~/.kube/config`
-
-
-
-5. Configurar o damemon do docker para expor o daemon remotamente
+16. Configurar o damemon do docker para expor o daemon remotamente
 `sudo mkdir -p /etc/systemd/system/docker.service.d`
 `sudo vi /etc/systemd/system/docker.service.d/override.conf`
 `past this`
@@ -46,7 +49,9 @@
         ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
 
 `sudo launchctl  daemon-reload`
+`sudo systemctl restart jenkins`
 `sudo launchctl  restart docker.service`
+
 
 
 6. `docker-compose -f jenkins-docker-compose.yml up`
