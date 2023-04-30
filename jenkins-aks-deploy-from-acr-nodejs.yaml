@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-springboot-deployment
+  name: nodejs-deployment
 spec:
   replicas: 3
   selector:
@@ -13,8 +13,8 @@ spec:
         app: springboot-app
     spec:
       containers:
-      - name: my-springboot-app
-        image: acrappfaluz3.azurecr.io/acrappfaluz3:18
+      - name: nodejs-app
+        image: acrappfaluz3.azurecr.io/acrappfaluz3:3
         imagePullPolicy: Always
         ports:
         - containerPort: 8085
