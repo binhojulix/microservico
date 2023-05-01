@@ -7,7 +7,6 @@ pipeline {
         registryName = "acrappfaluz3"
         dockerImage = 'acrimg'
         ACR_USERNAME = 'acrappfaluz3'
-        ACR_PASSWORD = 'YFM68cuXBN/yabSzRwBWMXPPhRoYRCyUv4CDYliAVG+ACRDZdL7K'
         registryUrl = "acrappfaluz3.azurecr.io"
     }
     stages {
@@ -29,7 +28,7 @@ pipeline {
         stage('Build Image'){
             steps {
                 script {
-                    dockerImage = docker.build("${registryName}:${env.BUILD_ID}")
+                    dockerImage = docker.build("${dockerImage}:${env.BUILD_ID}")
                 }
             }
         }
@@ -39,8 +38,8 @@ pipeline {
             script {
                 withCredentials([usernamePassword(credentialsId: 'acrapp', usernameVariable: 'ACR_USERNAME', passwordVariable: 'ACR_PASSWORD')]) {
                     sh "docker login ${registryUrl} -u ${ACR_USERNAME} -p ${ACR_PASSWORD}"
-                    sh "docker tag ${registryName}:${env.BUILD_ID} ${registryUrl}/${registryName}:${env.BUILD_ID}"
-                    sh "docker push ${registryUrl}/${registryName}:${env.BUILD_ID}"
+                    sh "docker tag ${dockerImage}:${env.BUILD_ID} ${registryUrl}/${dockerImage}:${env.BUILD_ID}"
+                    sh "docker push ${registryUrl}/${dockerImage}:${env.BUILD_ID}"
                 }
             }
         }

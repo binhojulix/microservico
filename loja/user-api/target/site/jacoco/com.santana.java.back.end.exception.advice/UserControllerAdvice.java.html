@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserControllerAdvice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">user-api</a> &gt; <a href="index.source.html" class="el_package">com.santana.java.back.end.exception.advice</a> &gt; <span class="el_source">UserControllerAdvice.java</span></div><h1>UserControllerAdvice.java</h1><pre class="source lang-java linenums">package com.santana.java.back.end.exception.advice;
+
+import java.time.LocalDateTime;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.santana.java.back.end.dto.ErrorDTO;
+import com.santana.java.back.end.exception.UserNotFoundException;
+
+@ControllerAdvice(basePackages = &quot;com.santana.java.back.end.controller&quot;)
+<span class="nc" id="L15">public class UserControllerAdvice {</span>
+ 
+	@ResponseBody
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public ErrorDTO handleUserNotFound(UserNotFoundException userNotFoundException) {    	
+<span class="nc" id="L21">    	ErrorDTO errorDTO = new ErrorDTO();</span>
+<span class="nc" id="L22">    	errorDTO.setStatus(HttpStatus.NOT_FOUND.value());</span>
+<span class="nc" id="L23">    	errorDTO.setMessage(&quot;Usuário não encontrado.&quot;);</span>
+<span class="nc" id="L24">    	errorDTO.setTimestamp(LocalDateTime.now());</span>
+<span class="nc" id="L25">        return errorDTO;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

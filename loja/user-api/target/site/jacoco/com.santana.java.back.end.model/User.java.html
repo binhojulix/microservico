@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">user-api</a> &gt; <a href="index.source.html" class="el_package">com.santana.java.back.end.model</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.santana.java.back.end.model;
+
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import com.santana.java.back.end.dto.UserDTO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+<span class="fc" id="L17">@Setter</span>
+<span class="fc" id="L18">@NoArgsConstructor</span>
+<span class="nc" id="L19">@AllArgsConstructor</span>
+@Entity(name=&quot;user&quot;)
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="nc" id="L25">	private long id;</span>
+<span class="fc" id="L26">	private String nome;</span>
+<span class="fc" id="L27">	private String cpf;</span>
+<span class="fc" id="L28">	private String endereco;</span>
+<span class="fc" id="L29">	private String key;</span>
+<span class="fc" id="L30">    private String email;</span>
+<span class="fc" id="L31">    private String telefone;</span>
+<span class="fc" id="L32">    private LocalDateTime dataCadastro;</span>
+
+	public static User convert(UserDTO userDTO) {
+<span class="fc" id="L35">		User user = new User();</span>
+<span class="fc" id="L36">		user.setNome(userDTO.getNome());</span>
+<span class="fc" id="L37">		user.setEndereco(userDTO.getEndereco());</span>
+<span class="fc" id="L38">		user.setCpf(userDTO.getCpf());</span>
+<span class="fc" id="L39">		user.setKey(userDTO.getKey());</span>
+<span class="fc" id="L40">		user.setEmail(userDTO.getEmail());</span>
+<span class="fc" id="L41">		user.setTelefone(userDTO.getTelefone());</span>
+<span class="fc" id="L42">		user.setDataCadastro(userDTO.getDataCadastro());</span>
+<span class="fc" id="L43">		return user;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

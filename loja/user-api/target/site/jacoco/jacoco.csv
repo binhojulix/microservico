@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+user-api,com.santana.java.back.end.service,UserService,85,81,9,5,15,18,15,4,8,4
+user-api,com.santana.java.back.end.converter,DTOConverter,3,34,0,0,1,9,1,1,1,1
+user-api,com.santana.java.back.end.exception.advice,UserControllerAdvice,19,0,0,0,6,0,2,0,2,0
+user-api,com.santana.java.back.end.model,User,30,90,0,0,2,18,2,17,2,17
+user-api,com.santana.java.back.end.controller,UserController,39,10,0,0,8,2,7,2,7,2
+user-api,com.santana.java.back.end,App,8,0,0,0,3,0,2,0,2,0

@@ -53,8 +53,11 @@
 `sudo launchctl  restart docker.service`
 
 
+create an kubernetes manigest to run this images
+image myappacrfaluz.azurecr.io/server:v1
 
 
+image myappacrfaluz.azurecr.io/wbapp:v1
 
 docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 acrappfaluz3/azure-vote-front:v1
 docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 acrappfaluz3.azurecr.io/azure-vote-front:v1

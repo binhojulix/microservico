@@ -80,12 +80,14 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 }
 
-# resource "azurerm_role_assignment" "example" {
-#   principal_id                     = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
-#   role_definition_name             = "AcrPull"
-#   scope                            = azurerm_container_registry.acr_app.id
-#   skip_service_principal_aad_check = true
-# }
+
+
+resource "azurerm_role_assignment" "example" {
+  principal_id                     = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+  role_definition_name             = "AcrPull"
+  scope                            = azurerm_container_registry.acr_app.id
+  skip_service_principal_aad_check = true
+}
 
 resource "azurerm_network_interface" "example" {
   name                = "example-nic"
@@ -227,26 +229,17 @@ resource "null_resource" "jenkins_provisioner" {
     private_key = tls_private_key.example_ssh.private_key_pem
   }
 
+   provisioner "file" {
+    source      = "install.sh"
+    destination = "/tmp/install.sh"
+  }
+
+
   provisioner "remote-exec" {
 
     inline = [
-      "sudo apt-get update",
-      "sudo apt install openjdk-11-jre -y",
-      "curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null",
-      "echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null",
-      "sudo apt-get update && sudo apt-get install jenkins -y",
-      "sudo service jenkins restart",
-      "curl -fsSL https://get.docker.com -o get-docker.sh",
-      "sudo sh get-docker.sh",
-      "sudo usermod -aG docker $USER",
-      "sudo usermod -aG docker jenkins",
-      "sudo apt install git-all",
-      "curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl",
-      "curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl",
-      "chmod +x ./kubectl",
-      "sudo mv ./kubectl /usr/local/bin/kubectl"
-
-
+        "chmod +x /tmp/install.sh",
+        "/tmp/install.sh"
     ]
   }
 }
