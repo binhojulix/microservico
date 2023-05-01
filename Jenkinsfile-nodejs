@@ -2,8 +2,8 @@ pipeline {
     agent any
  
     environment {
-        registryName = "acrappfaluz3nodejs"
-        dockerImage = 'acrimg'
+        registryName = "acrappfaluz3"
+        dockerImage = 'azure-vote-front'
         ACR_USERNAME = 'acrappfaluz3'
         ACR_PASSWORD = 'YFM68cuXBN/yabSzRwBWMXPPhRoYRCyUv4CDYliAVG+ACRDZdL7K'
         registryUrl = "acrappfaluz3.azurecr.io"
@@ -25,7 +25,7 @@ pipeline {
    
      stage('Build Image') {
         steps {
-            dir('app-nodejs') {
+            dir('azure-voting-app-redis/azure-vote') {
                 script {
                     dockerImage = docker.build("${registryName}:${env.BUILD_ID}")
                 }
@@ -48,11 +48,13 @@ pipeline {
 
      stage ('K8S Deploy') {
               steps {
-                script {
-                    withKubeConfig([credentialsId: 'aks', serverUrl: '']) {
-                    sh ('kubectl apply -f jenkins-aks-deploy-from-acr-nodejs.yaml')
+                dir('azure-voting-app-redis') {
+                    script {
+                        withKubeConfig([credentialsId: 'aks', serverUrl: '']) {
+                        sh ('kubectl apply -f azure-vote-all-in-one-redis.yaml.yaml')
+                        }
                     }
-                }
+                   }
             }
         }
 
